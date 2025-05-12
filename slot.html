@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>테스트</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/slot.css">
+</head>
+<body>
+  <h1>🎰테스트</h1>
+  <p>스페이스바를 누를 때마다 하나씩 멈춥니다</p>
+  <div id="coinDisplay"></div>
+  <div class="slot-container">
+    <div class="slot" id="slot0">7</div>
+    <div class="slot" id="slot1">7</div>
+    <div class="slot" id="slot2">7</div>
+  </div>
+  <div id="result"></div>
+  <button id="menuBtn" onclick="goToMenu()">메인메뉴로 돌아가기</button>
+
+  <audio id="spinSound" src="sounds/spin.mp3" preload="auto" loop></audio>
+
+  <script src="js/slot.js"></script>
+</body>
+</html>
