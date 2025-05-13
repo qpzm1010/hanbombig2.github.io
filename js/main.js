@@ -49,7 +49,3 @@ function startGame() {
     }
   });
   
-  ["contextmenu", "mousedown", "mouseup", "mousemove"].forEach(event =>
-    document.addEventListener(event, e => { if (!unlocked) e.preventDefault(); })
-  );
-  

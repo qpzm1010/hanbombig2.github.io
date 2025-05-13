@@ -2,24 +2,39 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>테스트</title>
+  <title>Hanbom Kim's Slot</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/slot.css">
 </head>
 <body>
-  <h1>🎰테스트</h1>
-  <p>스페이스바를 누를 때마다 하나씩 멈춥니다</p>
+  <h1>🎰 Hanbom Kim's Slot 🎰</h1>
+  <p>스페이스바를 누를 때마다 슬롯이 하나씩 멈춥니다.</p>
   <div id="coinDisplay"></div>
+
   <div class="slot-container">
     <div class="slot" id="slot0">7</div>
     <div class="slot" id="slot1">7</div>
     <div class="slot" id="slot2">7</div>
   </div>
+
   <div id="result"></div>
   <button id="menuBtn" onclick="goToMenu()">메인메뉴로 돌아가기</button>
 
-  <audio id="spinSound" src="sounds/spin.mp3" preload="auto" loop></audio>
+  <div class="info-box">
+    <h2>🎮 게임 방법</h2>
+    <p>스페이스바를 눌러 슬롯을 돌리세요. 슬롯은 누를 때마다 하나씩 멈춥니다.<br>숫자 모두 멈춘 뒤 결과에 따라 등수가 결정됩니다.</p>
+    <h2>🎁 당첨 상품 안내</h2>
+    <ul>
+      <li><strong>1등</strong> (7 7 7): <em>뿌링클 기프티콘</em></li>
+      <li><strong>2등</strong> (6 6 6): <em>세븐일레븐 5000원 기프티콘</em></li>
+      <li><strong>3등</strong> (5 5 5): <em>메가커피 아메리카노 기프티콘</em></li>
+      <li><strong>4등</strong> (4 4 4): <em>+2 코인</em></li>
+      <li><strong>5등</strong> (숫자 2개 일치): <em>사탕</em></li>
+      <li><strong>6등</strong> (모두 다른 숫자): <em>꽝</em></li>
+    </ul>
+  </div>
 
+  <audio id="spinSound" src="sounds/spin.mp3" preload="auto" loop></audio>
   <script src="js/slot.js"></script>
 </body>
 </html>
