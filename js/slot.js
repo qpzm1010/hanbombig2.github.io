@@ -120,7 +120,6 @@ window.addEventListener("keydown", e => {
   }
 });
 
-// 보완: 키보드 이벤트 누락 대비 추가
 setInterval(() => {
   if (isSpinning && waitingToStop && stopped < 3 && stopQueued) {
     stopOne();
