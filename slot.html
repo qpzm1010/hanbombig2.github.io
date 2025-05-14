@@ -18,7 +18,7 @@
   </div>
 
   <div id="result"></div>
-  <button id="menuBtn" onClick="location.href='index.html'">메인메뉴로 돌아가기</button>
+  <button id="menuBtn" onClick="location.href='index.html'" style="display:none;">메인메뉴로 돌아가기</button>
 
   <div class="info-box">
     <h2>🎮 게임 방법</h2>
@@ -29,21 +29,23 @@
       <li><strong>1등</strong> (7 7 7), (1 1 1): <em>뿌링클 기프티콘</em></li>
       <li><strong>2등</strong> (6 6 6), (2 2 2): <em>세븐일레븐 5000원 기프티콘</em></li>
       <li><strong>3등</strong> (5 5 5), (3 3 3): <em>메가커피 아메리카노 기프티콘</em></li>
-      <li><strong>4등</strong> (4 4 4): <em>+2 코인</em></li>
+      <li><strong>4등</strong> (4 4 4): <em>+1 코인</em></li>
       <li><strong>5등</strong> (숫자 2개 일치): <em>사탕</em></li>
       <li><strong>6등</strong> (모두 다른 숫자): <em>꽝</em></li>
     </ul>
     <h2>⛔ 주의사항</h2>
-      <li>오류가 날수있어 스페이스바를 연타하거나 빠르게 누르지마세요!</li>
+    <ul>
+      <li>오류가 날 수 있어 스페이스바를 연타하거나 빠르게 누르지 마세요!</li>
       <li>오류가 난다면 곧바로 불러주세요!</li>
-      <li>노트북에서 슬롯머신외엔 다른건 건들지 말아주세요!</li>
-      <li>당첨시 등수를 바로 말씀해주세요!</li>
-      <li>전체화면을 풀지말아주세요!</li>
-      <li>룰렛 돌리는것 이외에 다른 행동은 저희를 불러주세요!</li>
-      <li><strong>모든 화면은 TV와 메인노트북으로 모니터링 및 녹화중입니다!!!</strong></li>
+      <li>노트북에서 슬롯머신 외엔 다른 건 건들지 말아주세요!</li>
+      <li>당첨 시 등수를 바로 말씀해주세요!</li>
+      <li>전체화면을 풀지 말아주세요!</li>
+      <li>룰렛 돌리는 것 이외의 행동은 저희를 불러주세요!</li>
+      <li><strong>모든 화면은 TV와 메인 노트북으로 모니터링 및 녹화 중입니다!!!</strong></li>
+    </ul>
   </div>
 
   <audio id="spinSound" src="sounds/spin.mp3" preload="auto" loop></audio>
-  <script src="js/slot.js"></script>
+  <script src="js/slot.js" defer></script>
 </body>
 </html>
