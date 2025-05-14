@@ -17,12 +17,10 @@ let coins = parseInt(localStorage.getItem("coins")) || 0;
 coinDisplay.textContent = `💰 남은 코인: ${coins}`;
 
 let intervals = [null, null, null];
-let stopped = 0;
-let chosenGrade = "6등";
 let resultValues = [0, 0, 0];
-let isSpinning = false;
-let waitingToStop = false;
-let stopQueued = false;
+let chosenGrade = "6등";
+let slotsStopped = 0;
+let state = "idle"; // "idle", "spinning", "stopping"
 
 function pickGrade() {
   const total = gradeChances.reduce((sum, g) => sum + g.weight, 0);
@@ -64,46 +62,44 @@ function generateByGrade(grade) {
 }
 
 function startSpin() {
-  if (isSpinning || intervals.some(x => x !== null)) return;
-  if (coins <= 0) {
-    result.textContent = "코인을 모두 사용했습니다!⛔";
-    menuBtn.style.display = "inline-block";
-    return;
-  }
-  isSpinning = true;
-  waitingToStop = true;
-  stopped = 0;
-  stopQueued = false;
+  if (state !== "idle" || coins <= 0) return;
+
+  state = "spinning";
   result.textContent = "";
   spinSound.currentTime = 0;
   spinSound.play();
+
   chosenGrade = pickGrade();
   resultValues = generateByGrade(chosenGrade);
+  slotsStopped = 0;
+
   for (let i = 0; i < 3; i++) {
     intervals[i] = setInterval(() => {
       slots[i].textContent = Math.floor(Math.random() * 9) + 1;
     }, 80);
   }
+
   coins--;
   coinDisplay.textContent = `💰 남은 코인: ${coins}`;
+  state = "stopping";
 }
 
 function stopOne() {
-  if (!waitingToStop || stopped >= 3) return;
+  if (state !== "stopping" || slotsStopped >= 3) return;
 
-  clearInterval(intervals[stopped]);
-  slots[stopped].textContent = resultValues[stopped];
-  intervals[stopped] = null;
-  stopped++;
+  clearInterval(intervals[slotsStopped]);
+  slots[slotsStopped].textContent = resultValues[slotsStopped];
+  intervals[slotsStopped] = null;
+  slotsStopped++;
 
-  if (stopped === 3) {
+  if (slotsStopped === 3) {
     spinSound.pause();
     result.textContent = `${chosenGrade} 당첨! 🎉`;
-    waitingToStop = false;
-    isSpinning = false;
+    state = "idle";
+
     if (coins <= 0) {
       setTimeout(() => {
-        result.textContent = "코인을 모두 사용했습니다!⛔";
+        result.textContent = "코인을 모두 사용했습니다! ⛔";
         menuBtn.style.display = "inline-block";
       }, 1000);
     }
@@ -111,18 +107,11 @@ function stopOne() {
 }
 
 window.addEventListener("keydown", e => {
-  if (e.code === "Space") {
-    if (!isSpinning) {
-      startSpin();
-    } else {
-      stopQueued = true;
-    }
+  if (e.code !== "Space") return;
+
+  if (state === "idle") {
+    startSpin();
+  } else if (state === "stopping" && slotsStopped < 3) {
+    stopOne();
   }
 });
-
-setInterval(() => {
-  if (isSpinning && waitingToStop && stopped < 3 && stopQueued) {
-    stopOne();
-    stopQueued = false;
-  }
-}, 50);
