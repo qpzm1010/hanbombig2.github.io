@@ -20,6 +20,7 @@ let intervals = [null, null, null];
 let stopped = 0;
 let chosenGrade = "6등";
 let resultValues = [0, 0, 0];
+let isSpinning = false;
 
 function pickGrade() {
   const total = gradeChances.reduce((sum, g) => sum + g.weight, 0);
@@ -61,12 +62,13 @@ function generateByGrade(grade) {
 }
 
 function startSpin() {
-  if (intervals.some(x => x !== null)) return;
+  if (isSpinning || intervals.some(x => x !== null)) return;
   if (coins <= 0) {
     result.textContent = "코인을 모두 사용했습니다!⛔";
     menuBtn.style.display = "inline-block";
     return;
   }
+  isSpinning = true;
   result.textContent = "";
   spinSound.currentTime = 0;
   spinSound.play();
@@ -91,6 +93,7 @@ function stopOne() {
     if (stopped === 3) {
       spinSound.pause();
       result.textContent = `${chosenGrade} 당첨! 🎉`;
+      isSpinning = false;
       if (coins <= 0) {
         setTimeout(() => {
           result.textContent = "코인을 모두 사용했습니다!⛔";
@@ -105,10 +108,9 @@ function goToMenu() {
   window.location.href = "index.html";
 }
 
-// 스페이스바만 사용
 window.addEventListener("keydown", e => {
   if (e.code === "Space") {
-    if (intervals.every(x => x === null)) {
+    if (!isSpinning) {
       startSpin();
     } else {
       stopOne();
