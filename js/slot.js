@@ -7,8 +7,8 @@ const menuBtn = document.getElementById("menuBtn");
 const gradeChances = [
   { grade: "1등", weight: 0 }, 
   { grade: "2등", weight: 0.1 }, 
-  { grade: "3등", weight: 1 }, 
-  { grade: "4등", weight: 35_000_000_000_000_000 }, 
+  { grade: "3등", weight: 50_000_000_000_000_000 }, 
+  { grade: "4등", weight: 125_000_000_000_000_000 }, 
   { grade: "5등", weight: 300_000_000_000_000_000 }, 
   { grade: "6등", weight: 665_000_000_000_000_000 }
 ];
