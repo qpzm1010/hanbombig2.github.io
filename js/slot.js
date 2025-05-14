@@ -105,47 +105,8 @@ function goToMenu() {
   window.location.href = "index.html";
 }
 
-// 🔒 제어 제한 관련
-let unlocked = false;
-let inputBuffer = "";
-
+// 스페이스바만 사용
 window.addEventListener("keydown", e => {
-  if (!unlocked) {
-    // unlock 커맨드 입력 감지
-    if (e.key.length === 1 && /^[a-zA-Z0-9]$/.test(e.key)) {
-      inputBuffer += e.key;
-      if (inputBuffer.length > 20) inputBuffer = inputBuffer.slice(-20);
-    }
-    if (e.key === "Enter") {
-      if (inputBuffer === "unlock") {
-        const pw = prompt("비밀번호를 입력하세요:");
-        if (pw === "kim") {
-          alert("제어 해제됨");
-          unlocked = true;
-        } else {
-          alert("비밀번호 틀림");
-          inputBuffer = "";
-        }
-      } else {
-        inputBuffer = "";
-      }
-    }
-
-    const allowedCodes = ["Tab", "Enter", "Backspace", "Delete", "Space"];
-    if (
-      !allowedCodes.includes(e.code) &&
-      !/^\d$/.test(e.key)
-    ) {
-      e.preventDefault();
-    }
-
-    if (["F12", "F5", "Escape"].includes(e.key)) e.preventDefault();
-    if (e.ctrlKey && (e.shiftKey || ["u", "s", "i", "j"].includes(e.key.toLowerCase()))) {
-      e.preventDefault();
-    }
-  }
-
-  // 실제 게임 제어
   if (e.code === "Space") {
     if (intervals.every(x => x === null)) {
       startSpin();
@@ -154,8 +115,3 @@ window.addEventListener("keydown", e => {
     }
   }
 });
-
-// 🔒 마우스 제어도 제한
-["contextmenu", "mousedown", "mouseup", "mousemove"].forEach(event =>
-  document.addEventListener(event, e => { if (!unlocked) e.preventDefault(); })
-);
