@@ -5,15 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const coinDisplay = document.getElementById("coinDisplay");
   const menuBtn = document.getElementById("menuBtn");
 
-const gradeChances = [
-  { grade: "1등", weight: 0.0001, numbers: [7, 7, 7] },
-  { grade: "2등", weight: 17_000_000_000, numbers: [6, 6, 6] },       // 1.7%
-  { grade: "3등", weight: 58_000_000_000, numbers: [5, 5, 5] },       // ↓ 6% → 5.8%
-  { grade: "4등", weight: 84_000_000_000, numbers: [4, 4, 4] },       // ↓ 10% → 8.4%
-  { grade: "5등", weight: 250_000_000_000 },                          // ↑ 25%
-  { grade: "6등", weight: 590_999_999_999 }                           // ↑ 나머지 59.1%
-];
-
+  const gradeChances = [
+    { grade: "1등", weight: 0.0001, numbers: [7, 7, 7] },
+    { grade: "2등", weight: 17_000_000_000, numbers: [6, 6, 6] },
+    { grade: "3등", weight: 58_000_000_000, numbers: [5, 5, 5] },
+    { grade: "4등", weight: 84_000_000_000, numbers: [4, 4, 4] },
+    { grade: "5등", weight: 250_000_000_000 },
+    { grade: "6등", weight: 590_999_999_999 }
+  ];
 
   let coins = parseInt(localStorage.getItem("coins")) || 3;
   coinDisplay.textContent = `💰 남은 코인: ${coins}`;
@@ -23,7 +22,7 @@ const gradeChances = [
   let resultValues = [0, 0, 0];
   let chosenGrade = "6등";
   let slotsStopped = 0;
-  let state = "idle"; // "idle", "spinning", "stopping"
+  let state = "idle";
 
   function logState(action) {
     console.log(`[STATE] ${action} | state: ${state} | coins: ${coins} | slotsStopped: ${slotsStopped}`);
@@ -75,7 +74,6 @@ const gradeChances = [
     state = "spinning";
     result.textContent = "";
     spinSound.currentTime = 0;
-
     spinSound.play().catch(err => console.warn("오디오 재생 실패:", err));
 
     chosenGrade = pickGrade();
@@ -110,6 +108,15 @@ const gradeChances = [
     if (slotsStopped === 3) {
       spinSound.pause();
       result.textContent = `${chosenGrade} 당첨! 🎉`;
+
+      // ✅ 4등일 경우 코인 1개 추가
+      if (chosenGrade === "4등") {
+        coins++;
+        localStorage.setItem("coins", coins);
+        coinDisplay.textContent = `💰 남은 코인: ${coins}`;
+        console.log("[보상] 4등으로 코인 1개 추가됨");
+      }
+
       state = "idle";
       logState("finished spin");
 
