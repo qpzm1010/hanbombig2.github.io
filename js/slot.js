@@ -6,14 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuBtn = document.getElementById("menuBtn");
 
   const gradeChances = [
-    { grade: "1등", weight: 0.0001, numbers: [7, 7, 7] },
-    { grade: "2등", weight: 17_000_000_000, numbers: [6, 6, 6] },
-    { grade: "3등", weight: 58_000_000_000, numbers: [5, 5, 5] },
-    { grade: "4등", weight: 84_000_000_000, numbers: [4, 4, 4] },
-    { grade: "5등", weight: 250_000_000_000 },
-    { grade: "6등", weight: 590_999_999_999 }
+    { grade: "1등", weight: 0, numbers: [7, 7, 7] },
+    { grade: "2등", weight: 0.02, numbers: [6, 6, 6] },
+    { grade: "3등", weight: 0.3, numbers: [5, 5, 5] },
+    { grade: "4등", weight: 10, numbers: [4, 4, 4] },
+    { grade: "5등", weight: 30 },
+    { grade: "6등", weight: 59.68 }
   ];
-
+  
+  
+  
   let coins = parseInt(localStorage.getItem("coins")) || 3;
   coinDisplay.textContent = `💰 남은 코인: ${coins}`;
   localStorage.setItem("coins", coins);
@@ -109,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
       spinSound.pause();
       result.textContent = `${chosenGrade} 당첨! 🎉`;
 
-      // ✅ 4등일 경우 코인 1개 추가
       if (chosenGrade === "4등") {
         coins++;
         localStorage.setItem("coins", coins);
