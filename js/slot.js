@@ -5,12 +5,12 @@ const coinDisplay = document.getElementById("coinDisplay");
 const menuBtn = document.getElementById("menuBtn");
 
 const gradeChances = [
-  { grade: "1등", weight: 0 }, 
-  { grade: "2등", weight: 0.1 }, 
-  { grade: "3등", weight: 50_000_000_000_000_000 }, 
-  { grade: "4등", weight: 125_000_000_000_000_000 }, 
-  { grade: "5등", weight: 300_000_000_000_000_000 }, 
-  { grade: "6등", weight: 665_000_000_000_000_000 }
+  { grade: "1등", weight: 1 },
+  { grade: "2등", weight: 20_000_000_000 },
+  { grade: "3등", weight: 70_000_000_000 },
+  { grade: "4등", weight: 100_000_000_000 },
+  { grade: "5등", weight: 400_000_000_000 },
+  { grade: "6등", weight: 409_999_999_999 }
 ];
 
 let coins = parseInt(localStorage.getItem("coins")) || 0;
@@ -22,6 +22,7 @@ let chosenGrade = "6등";
 let resultValues = [0, 0, 0];
 let isSpinning = false;
 let waitingToStop = false;
+let stopQueued = false;
 
 function pickGrade() {
   const total = gradeChances.reduce((sum, g) => sum + g.weight, 0);
@@ -72,6 +73,7 @@ function startSpin() {
   isSpinning = true;
   waitingToStop = true;
   stopped = 0;
+  stopQueued = false;
   result.textContent = "";
   spinSound.currentTime = 0;
   spinSound.play();
@@ -108,10 +110,6 @@ function stopOne() {
   }
 }
 
-function goToMenu() {
-  window.location.href = "index.html";
-}
-
 window.addEventListener("keydown", e => {
   if (e.code === "Space") {
     if (!isSpinning) {
@@ -121,3 +119,11 @@ window.addEventListener("keydown", e => {
     }
   }
 });
+
+// 보완: 키보드 이벤트 누락 대비 추가
+setInterval(() => {
+  if (isSpinning && waitingToStop && stopped < 3 && stopQueued) {
+    stopOne();
+    stopQueued = false;
+  }
+}, 50);
