@@ -120,6 +120,7 @@ window.addEventListener("keydown", e => {
   }
 });
 
+
 setInterval(() => {
   if (isSpinning && waitingToStop && stopped < 3 && stopQueued) {
     stopOne();
